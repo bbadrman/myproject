@@ -43,47 +43,68 @@
         <p>Learn more about me</p>
       </div>
 
+      {% if about %}
       <div class="row">
         <div class="col-lg-4" data-aos="fade-right">
-          <img src="{{ asset('assets/img/badr_chemise1.jpg') }}" class="img-fluid" alt="">
+            {% if about.image %}
+                <img src="{{ asset('assets/img/' ~ about.image) }}" class="img-fluid" alt="{{ about.title }}">
+            {% else %}
+                <img src="https://placehold.co/600x600?text=No+Image" class="img-fluid" alt="No Image">
+            {% endif %}
         </div>
         <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-          <h3>Back-End &amp; Developer PHP - Symfony</h3>
+          <h3>{{ about.title }}</h3>
+          {% if about.subtitle %}
           <p class="fst-italic">
-            Autonomous, passionate, curious, attentive to customer needs and the quality of what I produce.
+            {{ about.subtitle }}
           </p>
+          {% endif %}
           <div class="row">
             <div class="col-lg-6">
               <ul>
-                <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>1 October 1983</span></li>
-                <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong>
-                  <span>https://bbadrman.github.io/portfolio_static/</span>
-                </li>
-                <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+212 611 11 22 24</span></li>
-                <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Rabat, MOROCCO</span></li>
+                {% if about.birthday %}
+                <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>{{ about.birthday|date('d F Y') }}</span></li>
+                {% endif %}
+                {% if about.website %}
+                <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>{{ about.website }}</span></li>
+                {% endif %}
+                {% if about.phone %}
+                <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>{{ about.phone }}</span></li>
+                {% endif %}
+                {% if about.city %}
+                <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>{{ about.city }}</span></li>
+                {% endif %}
               </ul>
             </div>
             <div class="col-lg-6">
               <ul>
-                <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>40</span></li>
-                <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Master</span></li>
-                <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong>
-                  <span>badr.bechtioui@gmail.com</span>
-                </li>
-                <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>Available</span></li>
+                {% if about.age %}
+                <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>{{ about.age }}</span></li>
+                {% endif %}
+                {% if about.degree %}
+                <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>{{ about.degree }}</span></li>
+                {% endif %}
+                {% if about.email %}
+                <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>{{ about.email }}</span></li>
+                {% endif %}
+                {% if about.freelance %}
+                <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>{{ about.freelance }}</span></li>
+                {% endif %}
               </ul>
             </div>
           </div>
           <p>
-            🎯 I enjoy being challenged and engaging with projects that require me to work outside my comfort zone and
-            knowledge set, as continuing to learn new languages and development techniques.</p>
-          📈 I'm fluent in many programming languages, especially in Php & Js.</p>
-          📄 My field of Interest are building new Web Technologies and Products and also in areas relatedMobile
-          application and Natural Language Processing.</p>
-          🌌 whenever possible, i also apply my passion for developing products with multiple different frameworks and
-          technologies, like Symfony, Laravel React, js ...
+            {{ about.description|nl2br }}
+          </p>
         </div>
       </div>
+      {% else %}
+      <div class="row">
+          <div class="col-12 text-center">
+              <p>Please configure the "About" section in the admin panel.</p>
+          </div>
+      </div>
+      {% endif %}
 
     </div><!-- End About Me -->
 
@@ -265,77 +286,30 @@
       <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
         <div class="swiper-wrapper">
 
+          {% for testimonial in testimonials %}
           <div class="swiper-slide">
             <div class="testimonial-item">
               <p>
                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                J'ai eu le plaisir de travailler aux côtés de badr pendant près de deux ans, et je suis continuellement
-                impressionné par son esprit curieux et sa volonté inébranlable de relever de nouveaux défis. Badr
-                possède une capacité remarquable à répondre aux questions les plus complexes et à élaborer des solutions
-                innovantes.
+                {{ testimonial.content }}
                 <i class="bx bxs-quote-alt-right quote-icon-right"></i>
               </p>
-              <img src="{{ asset('assets/img/testimonials/testimonials-1.jpg') }}" class="testimonial-img" alt="">
-              <h3>Soufiane lamardi</h3>
-              <h4>Ceo &amp; Founder</h4>
+              {% if testimonial.image %}
+                <img src="{{ asset('assets/img/testimonials/' ~ testimonial.image) }}" class="testimonial-img" alt="{{ testimonial.name }}">
+              {% else %}
+                <img src="https://placehold.co/400x400?text=User" class="testimonial-img" alt="User">
+              {% endif %}
+              <h3>{{ testimonial.name }}</h3>
+              <h4>{{ testimonial.profession }}</h4>
             </div>
           </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
+          {% else %}
+           <div class="swiper-slide">
             <div class="testimonial-item">
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                Badr est non seulement efficace dans son travail individuel, mais il sait également tirer le meilleur
-                parti du travail d'équipe. Son sens du collectif et sa capacité à motiver les membres de l'équipe sont
-                remarquables. Il est toujours prêt à partager ses connaissances et à soutenir ses collègues dans
-                l'accomplissement de leurs objectifs professionnels.
-                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-              <img
-                src="https://media.licdn.com/dms/image/D4E03AQEuxeaPOW3v3A/profile-displayphoto-shrink_400_400/0/1709011886516?e=1721865600&amp;v=beta&amp;t=2y6aKKUAxvSv8R4sEnU8NDyJaYIXgMhqnbSCh9EoO1A"
-                class="testimonial-img" alt="">
-              <h3>Adnane azakmame</h3>
-              <h4>Junior Developer PHP/Symfony </h4>
+              <p>No testimonials found.</p>
             </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-item">
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                J’ai eu le plaisir de travailler avec Badr pendant une année sur un projet frealaance, en collaborant
-                sur des projets Web.
-                J’ai été particulièrement impressionné par la capacité de Badr à traiter même les clients les plus
-                difficiles et avec le sourire.
-                Tout employé a de la chance d’avoir Badr comme collègue.
-                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-              <img
-                src=" https://media.licdn.com/dms/image/C5603AQFdsrWMa_6_mg/profile-displayphoto-shrink_400_400/0/1516572473291?e=1721865600&amp;v=beta&amp;t=0RRmifsm3lWfq_5X58MzbQrBbL6MTtBcXpRF7H_FLaU"
-                class="testimonial-img" alt="">
-              <h3>Mourad HAMMANI </h3>
-              <h4>Développeur PHP/SYMFONY </h4>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-item">
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                J’ai travaillé dans le même service que badr pendant 3 années. Toujours curieux et ouvert d’esprit,
-                il a un réel goût pour les défis ! badr est toujours disposée à répondre aux diverses questions et à
-                réfléchir à des solutions aux problèmes les plus complexes. bien qu’efficace seul, badr il a le sens
-                du collectif et sait motiver les équipes lorsqu’un projet lui est confié.
-                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-
-              <img
-                src="https://media.licdn.com/dms/image/C4D03AQFo4pnKUpqTvQ/profile-displayphoto-shrink_400_400/0/1659029512738?e=1721865600&amp;v=beta&amp;t=-GI-WmdtklVRWnbdh0ry3nvlw58ThukLYc0ONQLYZNY"
-                class="testimonial-img" alt="">
-              <h3>Zakaria Toumoun </h3>
-              <h4>Développeur JS/REACT</h4>
-            </div>
-          </div><!-- End testimonial item -->
+          </div>
+          {% endfor %}
 
           <div class="swiper-slide">
             <div class="testimonial-item">
@@ -379,83 +353,55 @@
       <div class="row">
         <div class="col-lg-6">
           <h3 class="resume-title">Sumary</h3>
+          {% for resume in resumes %}
+          {% if resume.category == 'summary' %}
           <div class="resume-item pb-0">
-            <h4>Badr BECHTIOUI</h4>
-            <p><em>Innovative and deadline-driven development engineer, with more than 4 years of experience in the
-                design and development of sites, from initial concept to final, careful deliverable.</em>
-            </p>
-            <p>
+            <h4>{{ resume.title }}</h4>
+            {% if resume.description %}
+            <p><em>{{ resume.description|raw }}</em></p>
+            {% endif %}
+            {% if resume.subtitle %}
             <ul>
-              <li>N°27 KOM Rabat,Morocco, 11040</li>
-              <li>(212) 611-11 2224</li>
-              <li>badr.bechtioui@gmail.com</li>
+              <li>{{ resume.subtitle }}</li>
             </ul>
-            </p>
+            {% endif %}
           </div>
+          {% endif %}
+          {% endfor %}
 
           <h3 class="resume-title">Education</h3>
+          {% for resume in resumes %}
+          {% if resume.category == 'education' %}
           <div class="resume-item">
-            <h4>Information Systems Engineering &amp; Designer Developer Engineer</h4>
-            <h5>2023 - 2019</h5>
-            <p><em>Higher School of Management, IT and
-                Telecommunication </em></p>
-            <p>Engineer, Information Systems Engineering</p>
+            <h4>{{ resume.title }}</h4>
+            <h5>{{ resume.period }}</h5>
+            {% if resume.subtitle %}
+            <p><em>{{ resume.subtitle }}</em></p>
+            {% endif %}
+            {% if resume.description %}
+            <div>{{ resume.description|raw }}</div>
+            {% endif %}
           </div>
-          <div class="resume-item">
-            <h4>Faculty of Letters and Sciences
-              Human - Mohammedia &amp; </h4>
-            <h5>2017 - 2018</h5>
-            <p><em>DEUG in Economics and Management </em></p>
-
-          </div>
-          <div class="resume-item">
-            <h4>OFPPT ISTA - Salé &amp; </h4>
-            <h5>2013 - 2015</h5>
-            <p><em>Technician specializing in major works </em></p>
-
-          </div>
+          {% endif %}
+          {% endfor %}
         </div>
+
         <div class="col-lg-6">
           <h3 class="resume-title">Professional Experience</h3>
+          {% for resume in resumes %}
+          {% if resume.category == 'experience' %}
           <div class="resume-item">
-            <h4>Ingénieur concepteur développeur</h4>
-            <h5>2022 - Present</h5>
-            <p><em>Experion, Rabat, Mr </em></p>
-            <p>
-            <ul>
-              <li>Native application development with PHP/MySQL.</li>
-              <li>Development of websites with Symfony 5 - 6 & 7. </li>
-              <li>Design and development of applications in Laravel and Symfony.
-                Web integration with CSS3 and Bootstrap.</li>
-              <li> Development of tailor-made symfony applications to meet the specificities and business expectations
-                of customers.
-                Design and develop multilingual sites.
-                Creation, implementation and modification of modules specific to the social network.
-                Setting up showcase sites for partners and export clients in Symfony / Laravel 5 & 6.
-                Contribution to the maintenance and continuous improvement of websites</li>
-            </ul>
-            </p>
+            <h4>{{ resume.title }}</h4>
+            <h5>{{ resume.period }}</h5>
+            {% if resume.subtitle %}
+            <p><em>{{ resume.subtitle }}</em></p>
+            {% endif %}
+            {% if resume.description %}
+            <div>{{ resume.description|raw }}</div>
+            {% endif %}
           </div>
-          <div class="resume-item">
-            <h4>Ingénieur développement Web</h4>
-            <h5>2020 - 2022</h5>
-            <p><em>Freelance, Rabat, Mr</em></p>
-            <p>
-            <ul>
-              <li>Creation of a B2C web application with the Symfony 5 framework.
-                Analysis and design with UML language.
-                Creation and distribution of tasks in the form of User Stories.
-                Integration of the responsive template with Symfony.
-                Creation of an iso-prod dev environment with Docker.
-                Development of an administration interface with EasyAdmin Bundle.
-                Using the PHP Mailjet wrapper to create a sending system
-                email.
-                Creation of an effective purchasing funnel, in several stages with Stripe for
-                payment.
-                Continuous integration with Jenkins - Docker.
-            </ul>
-            </p>
-          </div>
+          {% endif %}
+          {% endfor %}
         </div>
       </div>
 
@@ -642,7 +588,7 @@
         </div>
       </div>
 
-      <form action="forms/contact.php" method="post" role="form" class="php-email-form mt-4">
+      <form action="{{ path('app_contact') }}" method="post" role="form" class="php-email-form mt-4">
         <div class="row">
           <div class="col-md-6 form-group">
             <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
