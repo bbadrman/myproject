@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 
 use App\Entity\Project;
+use App\Entity\Resume;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
@@ -49,5 +50,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Projects', 'fas fa-list', Project::class);
         yield MenuItem::linkToCrud('Skills', 'fas fa-code', \App\Entity\Skill::class);
+        yield MenuItem::linkToCrud('Resume', 'fas fa-file-alt', Resume::class);
+        yield MenuItem::linkToCrud('About', 'fas fa-user', \App\Entity\About::class);
+        yield MenuItem::linkToCrud('Testimonials', 'fas fa-quote-left', \App\Entity\Testimonial::class);
     }
 }
